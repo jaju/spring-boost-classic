@@ -3,7 +3,7 @@
 Ever wished to introduce Clojure into your SpringBoot app (organization)?
 And, want to start very small - ~nrepl~ and a ring-like sub-module - and then use REPL-power for live-coding and adding new functionality?
 
-Then, ~spring-boost~ simplifies it for you!
+Then, ~spring-boost-classic~ simplifies it for you!
 
 Note: This is a version for ~Spring MVC~. For something that goes with ~Spring WebFlux~, look at [[https://github.com/jaju/spring-boost][spring-boost]].
 
