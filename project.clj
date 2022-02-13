@@ -19,7 +19,9 @@
              {:dependencies
               [[org.springframework.boot/spring-boot ~spring-boot-version]
                [org.springframework/spring-context ~spring-version]
-               [org.springframework/spring-webmvc ~spring-version]]}
+               [org.springframework/spring-webmvc ~spring-version]
+               [javax.servlet/javax.servlet-api "4.0.1"]
+               ]}
 
              :dev
              {:dependencies

@@ -15,7 +15,7 @@ import static org.msync.spring_boost.Utils.require;
 /**
  * Holds the run-time states
  */
-class Boost {
+public class Boost {
 
     private final int nreplPort;
     private final ApplicationContext applicationContext;
