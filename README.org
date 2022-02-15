@@ -162,6 +162,14 @@ user> @org.msync.spring-boost.application-context/state
               "org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@333bd779, started on Wed Sep 01 21:47:28 IST 2021"]}
 #+end_src
 
+#+begin_src mermaid
+  flowchart TB
+    nrepl-client-->nrepl-server
+    subgraph server [server]
+    nrepl-server
+    end
+#+end_src
+
 
 ** Control the NREPL server
 *** Start it
