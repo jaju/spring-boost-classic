@@ -33,7 +33,7 @@
 
   :java-source-paths ["src-java"]
 
-  :javac-options ["-source" "11" "-target" "11"]
+  :javac-options ["-source" "17" "-target" "17"]
 
   :dependencies [[org.clojure/clojure ~core-version]
                  [nrepl/nrepl "1.0.0"]]
@@ -41,7 +41,7 @@
   :javadoc-opts {:package-names   ["org.msync.spring_boost"]
                  :additional-args ["-windowtitle" "Spring Boost Javadoc"
                                    "-quiet"
-                                   "-link" "https://docs.oracle.com/en/java/javase/11/docs/api/"
+                                   "-link" "https://docs.oracle.com/en/java/javase/17/docs/api/"
                                    "-link" ~(str "https://www.javadoc.io/static/org.clojure/clojure/" core-version)
                                    "-link" ~(str "https://javadoc.io/doc/org.springframework/spring-beans/" spring-version)
                                    "-link" ~(str "https://javadoc.io/doc/org.springframework/spring-web/" spring-version)]}
