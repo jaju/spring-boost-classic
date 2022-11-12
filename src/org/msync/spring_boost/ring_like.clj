@@ -1,10 +1,9 @@
 (ns org.msync.spring-boost.ring-like
   (:require [clojure.string])
-  (:import [org.springframework.http.server ServerHttpRequest]
-           [org.springframework.util MultiValueMap]
-           (org.springframework.web.servlet.function ServerRequest)
-           (javax.servlet.http HttpServletRequest)
-           (java.util List Map Collections)))
+  (:import [org.springframework.util MultiValueMap]
+           [org.springframework.web.servlet.function ServerRequest]
+           [javax.servlet.http HttpServletRequest]
+           [java.util Map Collections]))
 
 ;; Reference - https://github.com/ring-clojure/ring/blob/master/SPEC
 

@@ -1,7 +1,7 @@
 (def version "0.1.0-SNAPSHOT")
 (def core-version "1.11.1")
 (def spring-version "5.3.23")
-(def spring-boot-version "2.7.4")
+(def spring-boot-version "2.7.5")
 
 (defproject org.msync/spring-boost-classic version
 
