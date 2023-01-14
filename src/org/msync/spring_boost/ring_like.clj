@@ -34,6 +34,35 @@
         (transient {})
         header-keys))))
 
+(comment
+
+  "Ref: https://github.com/ring-clojure/ring/blob/master/SPEC"
+
+  "Ring request map contains the following key-value pairs."
+
+  {:server-port "Required, integer"
+   :server-name "Required, string"
+   :remote-addr "Required, string"
+   :uri "Required, string"
+   :query-string "Optional, string"
+   :scheme "Required, clojure.lang.Keyword"
+   :request-method "Required, clojure.lang.Keyword"
+   :protocol "Required, string"
+   :content-type #{:DEPRECATED "Optional, string"}
+   :content-length #{:DEPRECATED "Optional, integer"}
+   :character-encoding #{:DEPRECATED "Optional, string"}
+   :ssl-client-cert "Optional, java.security.cert.X509Certificate"
+   :headers "Required, clojure.lang.IPersistentMap, downcased string keys to value strings. Multiple
+   values should be concatenated with a comma"
+   :body "Optional, java.io.InputStream"}
+
+  "Ring response map contains the following key-value pairs"
+
+  {:status "Required, integer"
+   :headers "Required, clojure.lang.IPersistentMap, string keys, and each value is either a string, or a seq of strings"
+   :body "Optional, ring.core.protocols/StreamableResponseBody. By default, the types that support this
+   protocol are String (verbatim), ISeq (each element is sent as a string), File and InputStream (auto-closed)"})
+
 (let [scheme :http
       http-protocol "HTTP/1.1"]
   (defn to-ring-spec
@@ -46,7 +75,7 @@
           remote-addr (.getRemoteHost http-request)
           uri uri
           scheme scheme
-          request-method (keyword (clojure.string/lower-case (.getMethod http-request)))
+          request-method (-> (.getMethod http-request) clojure.string/lower-case keyword)
           protocol http-protocol
           spring-headers (extract-headers http-request)
           headers (to-ring-headers spring-headers)]
