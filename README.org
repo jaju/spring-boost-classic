@@ -82,8 +82,8 @@ repositories {
 }
 
 dependencies {
-    developmentOnly("org.msync:spring-boost:0.2.0-SNAPSHOT")
-    developmentOnly("compojure:compojure:1.6.2")
+    developmentOnly("org.msync:spring-boost-classic:0.1.0")
+    developmentOnly("compojure:compojure:1.7.0")
 }
 #+end_src
 *** Ensure your clojure code is copied to the classpath
