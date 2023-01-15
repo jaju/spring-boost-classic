@@ -26,7 +26,7 @@ It works along-side your existing Java code, without interfering, and you can ac
 
 The following code shows
 1. Setting up end-points - routes and all - with Compojure
-2. Setting up a websocket handler - builds on top of Springboot's websocket infrastructure.
+2. Some examples of querying the ApplicationContext and via it, beans.
 
 #+begin_src clojure
 (ns org.msync.spring-clj.core
