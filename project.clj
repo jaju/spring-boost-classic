@@ -1,4 +1,4 @@
-(def version "0.1.0")
+(def version "0.1.1-SNAPSHOT")
 (def core-version "1.11.1")
 (def spring-version "5.3.25")
 (def spring-boot-version "2.7.7")
@@ -25,7 +25,8 @@
 
              :dev
              {:dependencies
-              [[org.springframework.boot/spring-boot-starter-web ~spring-boot-version]]}}
+              [[org.springframework.boot/spring-boot-starter-web ~spring-boot-version]
+               [org.springframework.boot/spring-boot-configuration-processor ~spring-boot-version]]}}
 
   :plugins [[org.msync/lein-javadoc "0.4.0-SNAPSHOT"]]
 

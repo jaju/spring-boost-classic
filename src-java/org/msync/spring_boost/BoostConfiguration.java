@@ -81,7 +81,7 @@ public class BoostConfiguration {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> route(RequestHandler requestHandler, Boost boost) {
+    public RouterFunction<ServerResponse> route(RequestHandler requestHandler) {
         return RouterFunctions
             .route(POST(expandedPath("/stop-nrepl")), requestHandler::stopNreplHandler)
             .andRoute(POST(expandedPath("/start-nrepl")), requestHandler::startNreplHandler)

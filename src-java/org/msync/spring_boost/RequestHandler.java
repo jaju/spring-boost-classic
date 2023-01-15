@@ -54,24 +54,6 @@ public class RequestHandler {
             HttpMethod.PATCH
     );
 
-    private ServerResponse updateResponse(Map<Keyword, Object> clojureResponse) {
-
-        Long status = (Long) clojureResponse.get(keyword("status"));
-        var headers = (Map<Object, String>) clojureResponse.get(keyword("headers"));
-        Object body = clojureResponse.get(keyword("body"));
-
-        logger.log(Level.FINE, () -> "Response Status = " + status);
-        logger.log(Level.FINE, () -> "Response Headers = " + headers);
-        logger.log(Level.FINE, () -> "Response Body = " + body);
-        return ServerResponse.status(status.intValue())
-                .headers(h -> {
-                    for (var key : headers.keySet()) {
-                        h.add(name(key), headers.get(key));
-                    }
-                })
-                .body(stringifyKeysFn.invoke(body));
-    }
-
     /**
      * Endpoint to request starting of the nrepl-server
      *
@@ -114,6 +96,23 @@ public class RequestHandler {
         }
     }
 
+    private ServerResponse updateResponse(Map<Keyword, Object> clojureResponse) {
+
+        Long status = (Long) clojureResponse.get(keyword("status"));
+        var headers = (Map<Object, String>) clojureResponse.get(keyword("headers"));
+        Object body = clojureResponse.get(keyword("body"));
+
+        logger.log(Level.FINE, () -> "Response Status = " + status);
+        logger.log(Level.FINE, () -> "Response Headers = " + headers);
+        logger.log(Level.FINE, () -> "Response Body = " + body);
+        return ServerResponse.status(status.intValue())
+            .headers(h -> {
+                for (var key : headers.keySet()) {
+                    h.add(name(key), headers.get(key));
+                }
+            })
+            .body(stringifyKeysFn.invoke(body));
+    }
 
     /**
      * @param request - ServerRequest object as initialized by Spring
@@ -122,7 +121,7 @@ public class RequestHandler {
     public ServerResponse httpRequestHandler(ServerRequest request) throws ServletException, IOException {
         String uri = prunePath(request.path());
 
-        System.out.println("We have a request for uri = " + uri);
+        logger.log(Level.FINE, () -> "We have a request for uri = " + uri);
 
         final var clojureRequest = (Map<Keyword, Object>) toRingSpecFn.invoke(uri, request);
 
@@ -130,9 +129,9 @@ public class RequestHandler {
             return handleRequestWithBody(request, clojureRequest);
         }
 
-        System.out.println("We have a clojure request: " + clojureRequest);
+        logger.log(Level.FINE, () -> "We have a clojure request: " + clojureRequest);
         Map<Keyword, Object> response = (Map<Keyword, Object>) httpHandlerFn.invoke(clojureRequest);
-        System.out.println("We have a response: " + response);
+        logger.log(Level.FINE, () -> "We have a response: " + response);
         return updateResponse(response);
     }
 
@@ -141,11 +140,9 @@ public class RequestHandler {
         var contentType = (String) headers.get("content-type");
         var mediaType = MediaType.valueOf(contentType);
 
-        var payloadType = (String) null;
-
-        payloadType = "body";
         var payload = request.body(contentTypeToJavaType(mediaType));
 
+        var payloadType = "body";
         var kwPayloadType = keyword(payloadType);
         var updatedRequest = assocFn.invoke(clojureRequest, kwPayloadType, payload);
         Map<Keyword, Object> response = (Map<Keyword, Object>) httpHandlerFn.invoke(updatedRequest);

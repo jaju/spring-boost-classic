@@ -43,7 +43,7 @@ public class Boost {
 
     protected synchronized void startNrepl() {
         if (Objects.nonNull(server)) {
-            throw new RuntimeException("NREPL service already running.");
+            throw new RuntimeException("nREPL service already running.");
         }
         try {
             server = serverStartFn.invoke(Clojure.read(":port"), nreplPort);
@@ -61,7 +61,7 @@ public class Boost {
         try {
             serverStopFn.invoke(server);
             server = null;
-            logger.info("NREPL server stopped.");
+            logger.info("nREPL server stopped.");
         } catch (Exception e) {
             logger.warning(() -> "Could not stop nREPL... " + e.getMessage());
             throw e;
