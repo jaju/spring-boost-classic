@@ -119,6 +119,7 @@ public class RequestHandler {
      * @param request - ServerRequest object as initialized by Spring
      * @return - The response
      */
+    @SuppressWarnings("unchecked")
     public ServerResponse httpRequestHandler(ServerRequest request) throws ServletException, IOException {
         String uri = prunePath(request.path());
 
@@ -138,7 +139,7 @@ public class RequestHandler {
 
     @SuppressWarnings("unchecked")
     private ServerResponse handleRequestWithBody(ServerRequest request, Map<Keyword, Object> clojureRequest) throws ServletException, IOException {
-        var headers = (Map<String, String>) clojureRequest.get(keyword("headers"));
+        var headers = (Map<String, Object>) clojureRequest.get(keyword("headers"));
         var contentType = (String) headers.get("content-type");
         var mediaType = MediaType.valueOf(contentType);
 

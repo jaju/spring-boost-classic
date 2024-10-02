@@ -8,8 +8,7 @@ Then, ~spring-boost-classic~ simplifies it for you!
 Note: This is a version for ~Spring MVC~. For something that goes with ~Spring WebFlux~, look at [[https://github.com/jaju/spring-boost][spring-boost]].
 
 ** Caveat
-For the web-endpoints, the library assumes *Spring WebMVC*. It will not work with reactive spring-boot.
-But ~nREPL~ will work just fine irrespective.
+For the web-endpoints, the library assumes *Spring WebMVC*. It will not work with reactive spring-boot. But ~nREPL~ will work just fine irrespective.
 
 * The Pitch: Sample Application Code
 Here's how you can write Clojure code, using *Compojure*, with Springboot.
@@ -80,37 +79,20 @@ repositories {
 }
 
 dependencies {
-    developmentOnly("org.msync:spring-boost-classic:0.1.1-SNAPSHOT")
-    developmentOnly("compojure:compojure:1.7.0")
+    developmentOnly("org.msync:spring-boost-classic:0.3.0-alpha3")
+    developmentOnly("compojure:compojure:1.7.1")
 }
 #+end_src
 *** Ensure your clojure code is copied to the classpath
 Assuming you will write your clojure code in ~src/main/clojure~
 
 #+begin_src kotlin
-tasks.register<Copy>("copyClojure") {
-    into("build/classes/java/main") {
-        destinationDir = file(".")
-        from("src/main/clojure")
+sourceSets {
+    main {
+        resources {
+            srcDir("src/main/clojure")
+        }
     }
-}
-
-tasks.getByName("bootRun").dependsOn("copyClojure")
-tasks.getByName("bootJar").dependsOn("copyClojure")
-#+end_src
-
-** Hint Springboot using ~@ComponentScan~
-#+begin_src java
-package com.company.my_application;
-
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-
-@SpringBootApplication
-@ComponentScan("org.msync.spring_boost")
-// And other standard stuff
-public class YourApplication {
-    // Your code here
 }
 #+end_src
 
@@ -123,7 +105,6 @@ clojure-component:
   nrepl-port: 8190
   nrepl-start: true
   root-path: /clojure
-  ws-path: /ws
   init-symbol: org.msync.spring-clj.core/main
 # ...
 #+end_src
@@ -139,10 +120,10 @@ And, *run*!
 And you should see something like the following
 #+BEGIN_EXAMPLE
 ...
-[2021-09-10 12:08:14,182] INFO  [main] org.msync.spring_boost.application_context$_component_init::invokeStatic Initializing the ClojureComponent
-[2021-09-10 12:08:14,984] INFO  [main] org.msync.spring_boost.Boost::startNrepl nREPL server started on port = 8190
-[2021-09-10 12:08:14,986] INFO  [main] org.msync.spring_boost.Boost::setupAppInit Initializing clojure code: org.msync.spring-clj.core/main
-[2021-09-10 12:08:21,097] INFO  [main] jdk.internal.reflect.NativeMethodAccessorImpl::invoke0 [spring-clj] Initializing clojure app...n
+2024-10-02T14:00:27.125+05:30  INFO 76260 --- [           main] org.msync.spring_boost.Boost             : nREPL server started on port = 8190
+2024-10-02T14:00:27.126+05:30  INFO 76260 --- [           main] o.m.spring-boost.application-context     : Initializing the ClojureComponent
+2024-10-02T14:00:27.126+05:30  INFO 76260 --- [           main] org.msync.spring_boost.Boost             : Initializing clojure code: org.msync.spring-clj.core/main
+2024-10-02T14:00:27.639+05:30  INFO 76260 --- [           main] org.msync.spring-clj.core                : [spring-clj] Initializing configured clojure web-app...
 ...
 #+END_EXAMPLE
 
@@ -155,9 +136,9 @@ For your convenience, there's a namespace you can switch to and get hold of the 
 #+begin_src clojure
 user> @org.msync.spring-boost.application-context/state
 ;; =>
-{:ctx #object[org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext
-              0x333bd779
-              "org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@333bd779, started on Wed Sep 01 21:47:28 IST 2021"]}
+{:ctx #object[org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext
+              0x6986bbaf
+              "org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6986bbaf, started on Wed Oct 02 14:00:26 IST 2024"]}
 #+end_src
 
 #+begin_src mermaid

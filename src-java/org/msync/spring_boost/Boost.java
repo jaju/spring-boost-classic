@@ -6,6 +6,7 @@ import clojure.lang.Symbol;
 import clojure.lang.Var;
 import org.springframework.context.ApplicationContext;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +50,7 @@ public class Boost {
             throw new RuntimeException("nREPL service already running.");
         }
         try {
-            server = serverStartFn.invoke(Clojure.read(":port"), nreplPort);
+            server = serverStartFn.invoke(Map.of(Clojure.read(":port"), nreplPort));
             logger.info(() -> "nREPL server started on port = " + nreplPort);
         } catch (Exception e) {
             logger.log(Level.SEVERE, () -> "Could not start nREPL... " + e.getMessage());
