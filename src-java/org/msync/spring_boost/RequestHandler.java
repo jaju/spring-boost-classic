@@ -71,7 +71,7 @@ public class RequestHandler {
             return ServerResponse
                     .status(HttpStatus.CONFLICT)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Map.of("status", "error"));
+                    .body(Map.of("status", "error", "message", e.getMessage()));
         }
     }
 
@@ -92,10 +92,11 @@ public class RequestHandler {
             return ServerResponse
                     .status(HttpStatus.CONFLICT)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(Map.of("status", "error"));
+                    .body(Map.of("status", "error", "message", e.getMessage()));
         }
     }
 
+    @SuppressWarnings("unchecked")
     private ServerResponse updateResponse(Map<Keyword, Object> clojureResponse) {
 
         Long status = (Long) clojureResponse.get(keyword("status"));
@@ -135,6 +136,7 @@ public class RequestHandler {
         return updateResponse(response);
     }
 
+    @SuppressWarnings("unchecked")
     private ServerResponse handleRequestWithBody(ServerRequest request, Map<Keyword, Object> clojureRequest) throws ServletException, IOException {
         var headers = (Map<String, String>) clojureRequest.get(keyword("headers"));
         var contentType = (String) headers.get("content-type");
