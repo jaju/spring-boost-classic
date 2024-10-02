@@ -75,12 +75,11 @@ public class Boost {
     public Boost(ApplicationContext applicationContext, int nreplPort, boolean isNreplStart, String appInitSymbol) {
         this.applicationContext = applicationContext;
         this.nreplPort = nreplPort;
-        if (isNreplStart)
-            startNrepl();
         clojureComponentInitFn.invoke(applicationContext);
         if (Objects.nonNull(appInitSymbol)) {
             setInitSymbol(appInitSymbol);
         }
+        if (isNreplStart)
+            startNrepl();
     }
-
 }
