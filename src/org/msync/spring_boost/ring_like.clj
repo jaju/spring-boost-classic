@@ -1,7 +1,7 @@
 (ns org.msync.spring-boost.ring-like
   (:require [clojure.string])
   (:import [org.springframework.web.servlet.function ServerRequest]
-           [javax.servlet.http HttpServletRequest]
+           [jakarta.servlet.http HttpServletRequest]
            [java.util Map Collections]))
 
 (comment

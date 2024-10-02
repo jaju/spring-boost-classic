@@ -1,7 +1,7 @@
-(def version "0.2.0-SNAPSHOT")
-(def core-version "1.11.1")
-(def spring-version "5.3.25")
-(def spring-boot-version "2.7.8")
+(def version "0.3.0-SNAPSHOT")
+(def core-version "1.11.3")
+(def spring-version "6.1.13")
+(def spring-boot-version "3.3.4")
 
 (defproject org.msync/spring-boost-classic version
 
@@ -20,8 +20,7 @@
               [[org.springframework.boot/spring-boot ~spring-boot-version]
                [org.springframework/spring-context ~spring-version]
                [org.springframework/spring-webmvc ~spring-version]
-               [javax.servlet/javax.servlet-api "4.0.1"]
-               ]}
+               [jakarta.servlet/jakarta.servlet-api "6.1.0"]]}
 
              :dev
              {:dependencies
@@ -37,7 +36,7 @@
   :javac-options ["-source" "17" "-target" "17"]
 
   :dependencies [[org.clojure/clojure ~core-version]
-                 [nrepl/nrepl "1.0.0"]]
+                 [nrepl/nrepl "1.3.0"]]
 
   :javadoc-opts {:package-names   ["org.msync.spring_boost"]
                  :additional-args ["-windowtitle" "Spring Boost Javadoc"
