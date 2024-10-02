@@ -1,7 +1,8 @@
 (def version "0.3.0-SNAPSHOT")
-(def core-version "1.11.3")
+(def core-version "1.12.0")
 (def spring-version "6.1.13")
 (def spring-boot-version "3.3.4")
+(def jakarta-servlet-version "6.1.0")
 
 (defproject org.msync/spring-boost-classic version
 
@@ -20,7 +21,7 @@
               [[org.springframework.boot/spring-boot ~spring-boot-version]
                [org.springframework/spring-context ~spring-version]
                [org.springframework/spring-webmvc ~spring-version]
-               [jakarta.servlet/jakarta.servlet-api "6.1.0"]]}
+               [jakarta.servlet/jakarta.servlet-api ~jakarta-servlet-version]]}
 
              :dev
              {:dependencies
@@ -42,7 +43,8 @@
                  :additional-args ["-windowtitle" "Spring Boost Javadoc"
                                    "-quiet"
                                    "-link" "https://docs.oracle.com/en/java/javase/17/docs/api/"
-                                   "-link" ~(str "https://www.javadoc.io/static/org.clojure/clojure/" core-version)
+                                   ;;"-link" ~(str "https://www.javadoc.io/static/org.clojure/clojure/" core-version)
+                                   "-link" ~(str "https://www.javadoc.io/static/org.clojure/clojure/1.11.3") ;; temp
                                    "-link" ~(str "https://javadoc.io/doc/org.springframework/spring-beans/" spring-version)
                                    "-link" ~(str "https://javadoc.io/doc/org.springframework/spring-web/" spring-version)]}
 
