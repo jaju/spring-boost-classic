@@ -8,19 +8,9 @@
 (defonce state (atom {}))
 (defonce ^Logger log (Logger/getLogger (str *ns*)))
 
-(gen-class
-  :name
-  ^{org.springframework.stereotype.Component ""}
-  org.msync.spring_boost.ClojureComponent
-  :state _
-  :prefix "-"
-  :constructors {[org.springframework.context.ApplicationContext] []}
-  :init component-init)
-
-(defn- -component-init [^ApplicationContext ctx]
+(defn -component-init [^ApplicationContext ctx]
   (.info log "Initializing the ClojureComponent")
-  (swap! state assoc :ctx ctx)
-  [[] {}])
+  (swap! state assoc :ctx ctx))
 
 (defn ^ApplicationContext get-application-context []
   (:ctx @state))
@@ -37,15 +27,11 @@
 (defn ^Environment environment []
   (.getEnvironment (get-application-context)))
 
-(defn ^Map beans-of-type [^Class clazz]
-  (.getBeansOfType (get-application-context) clazz))
-
-(defn ^Map beans-with-annotation [^Class annotation]
-  (.getBeansWithAnnotation (get-application-context) annotation))
-
 (defn ^Map beans
   ([] (beans Object))
-  ([^Class clazz] (->> clazz
-                    beans-of-type
-                    (into {})
-                    keywordize-keys)))
+  ([^Class clazz]
+   (keywordize-keys (.getBeansOfType (get-application-context) clazz))))
+
+(defn ^Map beans-with-annotation [^Class annotation]
+  (keywordize-keys
+    (.getBeansWithAnnotation (get-application-context) annotation)))

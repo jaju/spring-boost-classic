@@ -23,13 +23,16 @@ public class Boost {
 
     private static final IFn serverStartFn;
     private static final IFn serverStopFn;
+    private static final IFn clojureComponentInitFn;
     private static final Logger logger = Logger.getLogger(Boost.class.getName());
 
 
     static {
         require.invoke(Clojure.read("nrepl.server"));
+        require.invoke(Clojure.read("org.msync.spring-boost.application-context"));
         serverStartFn = Clojure.var("nrepl.server", "start-server");
         serverStopFn = Clojure.var("nrepl.server", "stop-server");
+        clojureComponentInitFn = Clojure.var("org.msync.spring-boost.application-context", "-component-init");
     }
 
     private void setInitSymbol(String initSymbol) {
@@ -73,6 +76,7 @@ public class Boost {
         this.nreplPort = nreplPort;
         if (isNreplStart)
             startNrepl();
+        clojureComponentInitFn.invoke(applicationContext);
         if (Objects.nonNull(appInitSymbol)) {
             setInitSymbol(appInitSymbol);
         }
